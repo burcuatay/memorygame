@@ -2,6 +2,10 @@
  * Create a list that holds all of your cards
  */
 
+var deck = document.querySelectorAll('.card')
+var oldArray = Array.from(deck);
+var newArray = Array.from(deck);
+
 
 /*
  * Display the cards on the page
@@ -11,6 +15,7 @@
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -24,6 +29,19 @@ function shuffle(array) {
 
     return array;
 }
+
+newArray = shuffle(newArray)
+
+
+var newHTML = newArray.map(function (cards){
+    '<li>'+ cards + '</li>';
+    return cards.children[0]
+});
+var burcuUl = document.getElementById('deck');
+newArray.forEach(function(elm) {
+    burcuUl.appendChild(elm);
+});
+
 
 
 /*
