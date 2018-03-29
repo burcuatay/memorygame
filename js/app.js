@@ -2,16 +2,9 @@
  * Create a list that holds all of your cards
  */
 
-var deck = document.querySelectorAll('.card')
+var deck = document.querySelectorAll('.card');
 var newArray = Array.from(deck);
 
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
@@ -32,12 +25,6 @@ function shuffle(array) {
 newArray = shuffle(newArray)
 
 // Loop through each card and create its HTML
-/*var newHTML = newArray.map(function (cards){
-    '<li>'+ cards + '</li>';
-    return cards.children[0]
-});
-*/
-
 // Add each card's HTML to the page
 var burcuUl = document.getElementById('deck');
 newArray.forEach(function(elm) {
@@ -56,3 +43,13 @@ newArray.forEach(function(elm) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+//Set up the event listener for each card
+for (var i = 0; i < newArray.length; i++) {
+    newArray[i].addEventListener('click', styChange);
+};
+
+//If the card is clicked, the card's symbol is being displayed
+function styChange(e){
+    e.target.className = 'card show open';
+};
