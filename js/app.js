@@ -3,7 +3,6 @@
  */
 
 var deck = document.querySelectorAll('.card')
-var oldArray = Array.from(deck);
 var newArray = Array.from(deck);
 
 
@@ -29,14 +28,17 @@ function shuffle(array) {
 
     return array;
 }
-
+//Shuffle the list of cards using the provided "shuffle" method above
 newArray = shuffle(newArray)
 
-
-var newHTML = newArray.map(function (cards){
+// Loop through each card and create its HTML
+/*var newHTML = newArray.map(function (cards){
     '<li>'+ cards + '</li>';
     return cards.children[0]
 });
+*/
+
+// Add each card's HTML to the page
 var burcuUl = document.getElementById('deck');
 newArray.forEach(function(elm) {
     burcuUl.appendChild(elm);
