@@ -53,3 +53,30 @@ for (var i = 0; i < newArray.length; i++) {
 function styChange(e){
     e.target.className = 'card show open';
 };
+
+//Put cards on a list
+var openCards = document.getElementsByClassName('card show open');
+
+
+
+//this if statement works! - checks if the two cards are the same and 
+//sets the right className attribute accordingly
+if(openCards["0"].children["0"].className == openCards["1"].children["0"].className){
+    openCards[1].className = "card match";
+	openCards[0].className = "card match";
+    }
+   else {
+        openCards[1].className = "card";
+		openCards[0].className = "card"
+    }
+
+
+// Close cards if there is no match
+// Lock cards in open position if there is a match
+
+/*if(openCards[0] == openCards[1]){
+    openCards.className = "card match"
+    }
+   else {
+        openCards.className = "card"
+    };*/
