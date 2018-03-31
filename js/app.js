@@ -5,7 +5,6 @@
 var deck = document.querySelectorAll('.card');
 var newArray = Array.from(deck);
 
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 
 function shuffle(array) {
@@ -50,17 +49,39 @@ for (var i = 0; i < newArray.length; i++) {
 };
 
 //If the card is clicked, the card's symbol is being displayed
+// Runs match check if there are two cards
+var self = this;
 function styChange(e){
     e.target.className = 'card show open';
+    self.openCards = document.getElementsByClassName('card show open');
+    if(self.openCards && self.openCards.length == 2) {
+        self.openCards = matchCheck(self.openCards)
+    };
+    
 };
 
 //Put cards on a list
 var openCards = document.getElementsByClassName('card show open');
 
 
+// Checks if the cards match and changes class names accordingly
+function matchCheck() {
+    var openCards = self.openCards 
+    if(self.openCards[1] && openCards["0"].children["0"].className == openCards["1"].children["0"].className){
+        openCards[1].className = "card match";
+        openCards[0].className = "card match";
+        }
+       else {
+            openCards[1].className = "card";
+            openCards[0].className = "card";
+        }
+}
 
+
+/*
 //this if statement works! - checks if the two cards are the same and 
-//sets the right className attribute accordingly
+// Closes cards if there is no match
+// Locks cards in open position if there is a match
 if(openCards["0"].children["0"].className == openCards["1"].children["0"].className){
     openCards[1].className = "card match";
 	openCards[0].className = "card match";
@@ -69,14 +90,5 @@ if(openCards["0"].children["0"].className == openCards["1"].children["0"].classN
         openCards[1].className = "card";
 		openCards[0].className = "card"
     }
+*/
 
-
-// Close cards if there is no match
-// Lock cards in open position if there is a match
-
-/*if(openCards[0] == openCards[1]){
-    openCards.className = "card match"
-    }
-   else {
-        openCards.className = "card"
-    };*/
