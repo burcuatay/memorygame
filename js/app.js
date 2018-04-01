@@ -5,6 +5,18 @@
 var deck = document.querySelectorAll('.card');
 var newArray = Array.from(deck);
 
+/*
+newArray.forEach(function classCheck (i){
+    if (newArray[i].className == "card match") {
+        newArray.remove(i)
+    }
+});
+*/
+
+var closeCards = newArray.map(function(i){
+    remove(document.getElementsByClassName('card match'))
+});
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 
 function shuffle(array) {
@@ -43,10 +55,13 @@ newArray.forEach(function(elm) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+
+
+
 //Set up the event listener for each card
 for (var i = 0; i < newArray.length; i++) {
     newArray[i].addEventListener('click', styChange);
-};
+    }
 
 //If the card is clicked, the card's symbol is being displayed
 // Runs match check if there are two cards
@@ -61,34 +76,47 @@ function styChange(e){
 };
 
 //Put cards on a list
-var openCards = document.getElementsByClassName('card show open');
+
+var matchedCards = document.getElementsByClassName('card match');
+var matchedArray = Array()
 
 
 // Checks if the cards match and changes class names accordingly
-function matchCheck() {
-    var openCards = self.openCards 
-    if(self.openCards[1] && openCards["0"].children["0"].className == openCards["1"].children["0"].className){
-        openCards[1].className = "card match";
-        openCards[0].className = "card match";
+function matchCheck(cards) {
+    var opCards = cards
+    if(opCards[1] && opCards["0"].children["0"].className == opCards["1"].children["0"].className){
+        opCards[1].className = "card match";
+        opCards[0].className = "card match";
+        matchedArray.push(matchedCards);
         }
-       else {
-            openCards[1].className = "card";
-            openCards[0].className = "card";
+        else {
+            opCards[1].className = "card";
+            opCards[0].className = "card";
         }
-}
+};
 
 
 /*
-//this if statement works! - checks if the two cards are the same and 
-// Closes cards if there is no match
-// Locks cards in open position if there is a match
-if(openCards["0"].children["0"].className == openCards["1"].children["0"].className){
-    openCards[1].className = "card match";
-	openCards[0].className = "card match";
-    }
-   else {
-        openCards[1].className = "card";
-		openCards[0].className = "card"
-    }
+var burcuUl = document.getElementById('deck');
+newArray.forEach(function(elm) {
+    burcuUl.appendChild(elm);
+});
 */
+
+//This doesn't work meh :( 
+//openCards[i].removeEventListener('click', styChange);
+
+/*function onlyTwo(){
+    var openCards = self.openCards
+    if(self.openCards.length > 2){
+
+    }
+}
+*/
+
+/* 1. Add a delay to the else part in matchCheck 
+*  2. Stop the cards going back to blue after they have become green (matched)
+*  3. Stop adding more than 2 cards to the openCards deck
+*/
+
 
