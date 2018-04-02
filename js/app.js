@@ -29,7 +29,7 @@ function shuffle(array) {
 
 
 
-function initilaze(){
+function initialaze(){
     self.newArray = shuffle(newArray);
     var burcuUl = document.getElementById('deck');
     self.newArray.forEach(function(elm) {
@@ -37,7 +37,7 @@ function initilaze(){
         burcuUl.appendChild(elm);
     });
 }
-initilaze()
+initialaze()
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -111,39 +111,14 @@ if (matchedArray.length == 8){
         }
 };
 
+// Makes restart button work
+document.getElementById('restart').addEventListener('click', initialaze);
 
 
-
-
-
-/*
-e = matchedCards.length -1;
-matchedCards[e].children["0"].className;
-*/
-
-/*
-var burcuUl = document.getElementById('deck');
-newArray.forEach(function(elm) {
-    burcuUl.appendChild(elm);
-});
-*/
-
-//This doesn't work meh :( 
-//openCards[i].removeEventListener('click', styChange);
-
-/*function onlyTwo(){
-    var openCards = self.openCards
-    if(self.openCards.length > 2){
-
-    }
-}
-*/
 
 /* 
-*  1. Stop the cards going back to blue after they have become green (matched)
-*  2. Stop adding more than 2 cards to the openCards deck
-*  3. Counter currently only counts the first click
-*  4. Display winning message
+*  1. Counter currently only counts the first click
+*  2. Display winning message
 */
 
 
