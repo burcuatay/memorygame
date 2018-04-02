@@ -11,11 +11,12 @@ newArray.forEach(function classCheck (i){
         newArray.remove(i)
     }
 });
-*/
 
-var closeCards = newArray.map(function(i){
+
+/*var closeCards = newArray.map(function(i){
     remove(document.getElementsByClassName('card match'))
 });
+*/
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
@@ -80,9 +81,15 @@ function styChange(e){
 var matchedCards = document.getElementsByClassName('card match');
 var matchedArray = Array()
 
+// Creates delay
+var myVar
+function myFunc(){
+    myVar = setTimeout(matchCheck, 3000);
+}
 
-// Checks if the cards match and changes class names accordingly
+// Checks if the cards match and changes class names accordingly - with 1 sec delay
 function matchCheck(cards) {
+    setTimeout(function myFunc(){
     var opCards = cards
     if(opCards[1] && opCards["0"].children["0"].className == opCards["1"].children["0"].className){
         opCards[1].className = "card match";
@@ -92,9 +99,30 @@ function matchCheck(cards) {
         else {
             opCards[1].className = "card";
             opCards[0].className = "card";
-        }
+        }}, 1000);
 };
 
+var e = 0;
+var cardName = Array()
+
+function nameAdd(){
+    if (matchedCards[1]){
+    cardName.push(matchedCards[matchedCards.length -1].children["0"].className)
+}};
+
+cardName = nameAdd(cardName);
+
+
+
+
+
+
+
+
+/*
+e = matchedCards.length -1;
+matchedCards[e].children["0"].className;
+*/
 
 /*
 var burcuUl = document.getElementById('deck');
@@ -114,9 +142,9 @@ newArray.forEach(function(elm) {
 }
 */
 
-/* 1. Add a delay to the else part in matchCheck 
-*  2. Stop the cards going back to blue after they have become green (matched)
-*  3. Stop adding more than 2 cards to the openCards deck
+/* 
+*  1. Stop the cards going back to blue after they have become green (matched)
+*  2. Stop adding more than 2 cards to the openCards deck
 */
 
 
