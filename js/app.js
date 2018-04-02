@@ -1,22 +1,12 @@
 /*
  * Create a list that holds all of your cards
  */
-
+var self = this;
 var deck = document.querySelectorAll('.card');
 var newArray = Array.from(deck);
-
-/*
-newArray.forEach(function classCheck (i){
-    if (newArray[i].className == "card match") {
-        newArray.remove(i)
-    }
-});
-
-
-/*var closeCards = newArray.map(function(i){
-    remove(document.getElementsByClassName('card match'))
-});
-*/
+var matchedArray = [];
+var matchedCards = document.getElementsByClassName('card match');
+var openCards = document.getElementsByClassName('card show open');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
@@ -34,17 +24,20 @@ function shuffle(array) {
     return array;
 }
 //Shuffle the list of cards using the provided "shuffle" method above
-newArray = shuffle(newArray)
-
 // Loop through each card and create its HTML
 // Add each card's HTML to the page
-var burcuUl = document.getElementById('deck');
-newArray.forEach(function(elm) {
-    burcuUl.appendChild(elm);
-});
 
 
 
+function initilaze(){
+    self.newArray = shuffle(newArray);
+    var burcuUl = document.getElementById('deck');
+    self.newArray.forEach(function(elm) {
+        elm.className = 'card close'
+        burcuUl.appendChild(elm);
+    });
+}
+initilaze()
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -60,59 +53,63 @@ newArray.forEach(function(elm) {
 
 
 //Set up the event listener for each card
-for (var i = 0; i < newArray.length; i++) {
-    newArray[i].addEventListener('click', styChange);
-    }
+
+document.getElementById('deck').addEventListener('click', styChange);
+
 
 //If the card is clicked, the card's symbol is being displayed
 // Runs match check if there are two cards
-var self = this;
+
 function styChange(e){
+    if (e.target.id === 'deck' ||
+    e.target.className.includes('open') ||
+    e.target.className.includes('match')
+) {
+        return e.preventDefault();
+    } 
     e.target.className = 'card show open';
     self.openCards = document.getElementsByClassName('card show open');
-    if(self.openCards && self.openCards.length == 2) {
-        self.openCards = matchCheck(self.openCards)
-    };
-    
+    if(self.openCards && self.openCards.length >= 2) {
+       ifMatch(self.openCards, e);
+    } 
 };
 
-//Put cards on a list
+/*function counter (){
+    var count = 0;
+    var moves = document.getElementById("moves");
+    if (moves) moves.innerHTML = ++count;
+};*/
 
-var matchedCards = document.getElementsByClassName('card match');
-var matchedArray = Array()
 
-// Creates delay
-var myVar
-function myFunc(){
-    myVar = setTimeout(matchCheck, 3000);
-}
-
-// Checks if the cards match and changes class names accordingly - with 1 sec delay
-function matchCheck(cards) {
-    setTimeout(function myFunc(){
+// Checks if the cards match and changes class names accordingly - with 0,5 sec delay
+function ifMatch(cards, event) {
+setTimeout(function myFunc(){
     var opCards = cards
-    if(opCards[1] && opCards["0"].children["0"].className == opCards["1"].children["0"].className){
+    if(opCards && opCards[0].children[0].className == opCards[1].children[0].className){
         opCards[1].className = "card match";
         opCards[0].className = "card match";
-        matchedArray.push(matchedCards);
+        return true;
+        } else {
+            if(cards.length >= 2) {
+                self.deck.forEach(function(elm) {
+                    if(elm.className.includes('open'))
+                    elm.className = 'card close'
+                }
+            );
+            } else {
+                event.target.className = 'card show open'
+            }
+        
         }
-        else {
-            opCards[1].className = "card";
-            opCards[0].className = "card";
-        }}, 1000);
+},500 )
 };
 
-var e = 0;
-var cardName = Array()
 
-function nameAdd(){
-    if (matchedCards[1]){
-    cardName.push(matchedCards[matchedCards.length -1].children["0"].className)
-}};
-
-cardName = nameAdd(cardName);
-
-
+if (matchedArray.length == 8){
+    function win(){
+        
+        }
+};
 
 
 
@@ -145,6 +142,8 @@ newArray.forEach(function(elm) {
 /* 
 *  1. Stop the cards going back to blue after they have become green (matched)
 *  2. Stop adding more than 2 cards to the openCards deck
+*  3. Counter currently only counts the first click
+*  4. Display winning message
 */
 
 
