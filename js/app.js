@@ -9,6 +9,7 @@ var openCards = document.getElementsByClassName('card show open');
 var moves = document.getElementById("moves");
 var stars = document.getElementById("stars");
 var uls = document.getElementsByTagName('ul');
+const winMsg = document.createElement('div')
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
@@ -37,21 +38,13 @@ function initialize(){
         elm.className = 'card close'
         burcuUl.appendChild(elm);
     });
-}
+    moves.innerHTML = "0";
+    uls[0].children[0].firstChild.className = "fa fa-star";
+    uls[0].children[1].firstChild.className = "fa fa-star";
+    uls[0].children[2].firstChild.className = "fa fa-star";
+    winMsg.style.display = 'none';
+};
 initialize()
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-
 
 
 //Set up the event listener for each card
@@ -91,8 +84,6 @@ var add = (function () {
 })();
 
 
-
-
 // Checks if the cards match and changes class names accordingly - with 0,5 sec delay
 function ifMatch(cards, event) {
 setTimeout(function myFunc(){
@@ -122,11 +113,15 @@ document.getElementById('restart').addEventListener('click', initialize);
 
 // Winning Message --> appends to the wrong div. Should append to the ul#deck
 function winMessage(){
-        const winMsg = document.createElement('div')
-        winMsg.textContent = 'You win!';
-        var currentDiv = document.getElementById("container");
-        document.body.insertBefore(winMsg, currentDiv);
-    };
+    winMsg.textContent = 'You win in ' + moves.innerHTML + ' moves!';
+    var currentDiv = document.getElementById("container");
+    document.body.insertBefore(winMsg, currentDiv);
+    winMsg.style.cssText = 'display: inherit;position: absolute;z-index: 2;padding-top: 300px;padding-left: 150px;font-size: 5em;text-align: center;padding-right: 150px;padding-bottom: 300px;'  
+    var refreshHTML = '<div class="restartGame" id="restartGame"> <i class="fa fa-repeat"></i> </div>';
+    winMsg.insertAdjacentHTML('beforeend', refreshHTML);
+    document.getElementById('restartGame').addEventListener('click', initialize);
+};
+
 
 // Empties out stars as user makes more moves
 function starRating(){
@@ -142,8 +137,8 @@ function starRating(){
 };
 
 
-
 /* 
+*
 *  2. Display winning message
 */
 
