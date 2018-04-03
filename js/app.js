@@ -6,7 +6,9 @@ var deck = document.querySelectorAll('.card');
 var newArray = Array.from(deck);
 var matchedCards = document.getElementsByClassName('card match');
 var openCards = document.getElementsByClassName('card show open');
-var moves = document.getElementById("moves")
+var moves = document.getElementById("moves");
+var stars = document.getElementById("stars");
+var uls = document.getElementsByTagName('ul');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
@@ -26,7 +28,6 @@ function shuffle(array) {
 //Shuffle the list of cards using the provided "shuffle" method above
 // Loop through each card and create its HTML
 // Add each card's HTML to the page
-
 
 
 function initialize(){
@@ -78,6 +79,8 @@ function styChange(e){
     } 
     // adds counter
     moves.innerHTML = add();
+    // runs star rating function
+    starRating();
 };
 
 
@@ -125,13 +128,23 @@ function winMessage(){
         document.body.insertBefore(winMsg, currentDiv);
     };
 
+// Empties out stars as user makes more moves
+function starRating(){
+    if (moves.innerHTML > 10 && moves.innerHTML <= 15){
+        uls[0].children[0].firstChild.className = "fa fa-star-o"
+    } else if (moves.innerHTML > 15 && moves.innerHTML <20) {
+        uls[0].children[1].firstChild.className = "fa fa-star-o"
+    } else if (moves.innerHTML >= 20) {
+        uls[0].children[2].firstChild.className = "fa fa-star-o"
+    }
+    else {
+    }
+};
 
 
 
 /* 
-*  1. Counter currently only counts the first click
 *  2. Display winning message
-*  3. Do star stuff
 */
 
 
