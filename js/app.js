@@ -4,9 +4,9 @@
 var self = this;
 var deck = document.querySelectorAll('.card');
 var newArray = Array.from(deck);
-var matchedArray = [];
 var matchedCards = document.getElementsByClassName('card match');
 var openCards = document.getElementsByClassName('card show open');
+var moves = document.getElementById("moves")
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
@@ -29,7 +29,7 @@ function shuffle(array) {
 
 
 
-function initialaze(){
+function initialize(){
     self.newArray = shuffle(newArray);
     var burcuUl = document.getElementById('deck');
     self.newArray.forEach(function(elm) {
@@ -37,7 +37,8 @@ function initialaze(){
         burcuUl.appendChild(elm);
     });
 }
-initialaze()
+initialize()
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -61,24 +62,32 @@ document.getElementById('deck').addEventListener('click', styChange);
 // Runs match check if there are two cards
 
 function styChange(e){
+    //prevents event listener if the card is already open or matched
     if (e.target.id === 'deck' ||
     e.target.className.includes('open') ||
     e.target.className.includes('match')
 ) {
         return e.preventDefault();
     } 
+    // opens cards when clicked
+    // if there are two open cards - checks for a match
     e.target.className = 'card show open';
     self.openCards = document.getElementsByClassName('card show open');
     if(self.openCards && self.openCards.length >= 2) {
        ifMatch(self.openCards, e);
     } 
+    // adds counter
+    moves.innerHTML = add();
 };
 
-/*function counter (){
-    var count = 0;
-    var moves = document.getElementById("moves");
-    if (moves) moves.innerHTML = ++count;
-};*/
+
+// Counter function
+var add = (function () {
+    var counter = 0;
+    return function () {return counter += 1;}
+})();
+
+
 
 
 // Checks if the cards match and changes class names accordingly - with 0,5 sec delay
@@ -88,7 +97,7 @@ setTimeout(function myFunc(){
     if(opCards && opCards[0].children[0].className == opCards[1].children[0].className){
         opCards[1].className = "card match";
         opCards[0].className = "card match";
-        return true;
+        if (matchedCards.length == 16){winMessage()};
         } else {
             if(cards.length >= 2) {
                 self.deck.forEach(function(elm) {
@@ -104,21 +113,25 @@ setTimeout(function myFunc(){
 },500 )
 };
 
-
-if (matchedArray.length == 8){
-    function win(){
-        
-        }
-};
-
 // Makes restart button work
-document.getElementById('restart').addEventListener('click', initialaze);
+document.getElementById('restart').addEventListener('click', initialize);
+
+
+// Winning Message --> appends to the wrong div. Should append to the ul#deck
+function winMessage(){
+        const winMsg = document.createElement('div')
+        winMsg.textContent = 'You win!';
+        var currentDiv = document.getElementById("container");
+        document.body.insertBefore(winMsg, currentDiv);
+    };
+
 
 
 
 /* 
 *  1. Counter currently only counts the first click
 *  2. Display winning message
+*  3. Do star stuff
 */
 
 
