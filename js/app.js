@@ -9,7 +9,8 @@ var openCards = document.getElementsByClassName('card show open');
 var moves = document.getElementById("moves");
 var stars = document.getElementById("stars");
 var uls = document.getElementsByTagName('ul');
-const winMsg = document.createElement('div')
+const winMsg = document.createElement('div');
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 
@@ -26,6 +27,33 @@ function shuffle(array) {
 
     return array;
 }
+
+// Sets the timer
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+
+var timer = setInterval(setTime, 1000);
+
+function setTime() {
+    ++totalSeconds;
+    secondsLabel.innerHTML = pad(totalSeconds % 60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+};
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+};
+
+function reset(){
+    totalSeconds = 0;
+}
+
 //Shuffle the list of cards using the provided "shuffle" method above
 // Loop through each card and create its HTML
 // Add each card's HTML to the page
@@ -43,6 +71,9 @@ function initialize(){
     uls[0].children[1].firstChild.className = "fa fa-star";
     uls[0].children[2].firstChild.className = "fa fa-star";
     winMsg.style.display = 'none';
+    var timer = setInterval(setTime, 1000);
+    window.clearInterval(timer);
+    reset();
 };
 initialize()
 
@@ -111,13 +142,17 @@ setTimeout(function myFunc(){
 document.getElementById('restart').addEventListener('click', initialize);
 
 
-// Winning Message --> appends to the wrong div. Should append to the ul#deck
+// Winning Message
 function winMessage(){
+    window.clearInterval(timer);
     winMsg.textContent = 'You win in ' + moves.innerHTML + ' moves!';
     var currentDiv = document.getElementById("container");
     document.body.insertBefore(winMsg, currentDiv);
-    winMsg.style.cssText = 'display: inherit;position: absolute;z-index: 2;padding-top: 300px;padding-left: 150px;font-size: 5em;text-align: center;padding-right: 150px;padding-bottom: 300px;'  
-    var refreshHTML = '<div class="restartGame" id="restartGame"> <i class="fa fa-repeat"></i> </div>';
+    winMsg.style.cssText = 'display: inherit;position: absolute;z-index: 2;padding-top: 300px;padding-left: 150px;font-size: 3em;text-align: center;padding-right: 150px;padding-bottom: 300px; list-style-type: none; display: flex'  
+    
+    var starHTML = stars.innerHTML
+    var refreshHTML = '<div class="restartGame" id="restartGame"> <i class="fa fa-repeat"></i> </div>' +  starHTML + totalSeconds;
+    
     winMsg.insertAdjacentHTML('beforeend', refreshHTML);
     document.getElementById('restartGame').addEventListener('click', initialize);
 };
@@ -125,21 +160,12 @@ function winMessage(){
 
 // Empties out stars as user makes more moves
 function starRating(){
-    if (moves.innerHTML > 10 && moves.innerHTML <= 15){
+    if (moves.innerHTML > 20 && moves.innerHTML <= 30){
         uls[0].children[0].firstChild.className = "fa fa-star-o"
-    } else if (moves.innerHTML > 15 && moves.innerHTML <20) {
+    } else if (moves.innerHTML > 30) {
         uls[0].children[1].firstChild.className = "fa fa-star-o"
-    } else if (moves.innerHTML >= 20) {
-        uls[0].children[2].firstChild.className = "fa fa-star-o"
     }
     else {
     }
 };
-
-
-/* 
-*
-*  2. Display winning message
-*/
-
 

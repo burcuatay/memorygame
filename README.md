@@ -2,19 +2,44 @@
 
 ## Table of Contents
 
+* [Project Intro] (#project intro)
 * [Instructions](#instructions)
 * [Contributing](#contributing)
+* [Features] (#features)
+
+
+## Project Intro
+The Memory Game project is a part of the Udacity Front End Development Nanodegree programme. It is one of the requirements to acquire the degree. 
 
 ## Instructions
+To launch the code, you need a _browser_. No other installations will be necessary.
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+To play the game,launch the code in your browser. The _timer_ will begin automatically. Click two cards. If they match, they will turn green. If not, they will close. The aim of the game is to match the cards as soon as possible. 
 
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+The _star rating_ goes down, as the user opens more cards.
 
 ## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+
+
+## Features
+
+### Star Rating:
+Star Rating is a 3 star rating system that empties out the stars as the user clicks on more cards. This is done by changing the class name of the stars from `"fa fa-star"` to `"fa fa-star-o"`. 
+
+### Timer:
+The timer starts counting the seconds as the user launches the game. It stops when all the card class names are `card match`. The seconds are then added to the Win Message (`winMsg`).
+
+### Move Counter:
+It counts the number of clicks the user has done on the cards. The number of moves are then added to the Win Message (`winMsg`).
+
+### Refresh Button:
+Allows user to refresh the game and start again. It uses the `initialize` function. 
+
+### Card Deck:
+Shuffles itself as a new game starts. This is also done through the `initialize` function. 
+
+
+
+
+
