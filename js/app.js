@@ -10,6 +10,7 @@ var moves = document.getElementById("moves");
 var stars = document.getElementById("stars");
 var uls = document.getElementsByTagName('ul');
 const winMsg = document.createElement('div');
+const winInfo = document.createElement('div');
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -50,9 +51,18 @@ function pad(val) {
   }
 };
 
+// Counter function
+var add = function(){
+    return self.counter++
+};
+
 function reset(){
     totalSeconds = 0;
-}
+    self.counter = 0
+    moves.innerHTML = "0";
+    add();
+};
+
 
 //Shuffle the list of cards using the provided "shuffle" method above
 // Loop through each card and create its HTML
@@ -66,7 +76,6 @@ function initialize(){
         elm.className = 'card close'
         burcuUl.appendChild(elm);
     });
-    moves.innerHTML = "0";
     uls[0].children[0].firstChild.className = "fa fa-star";
     uls[0].children[1].firstChild.className = "fa fa-star";
     uls[0].children[2].firstChild.className = "fa fa-star";
@@ -108,12 +117,6 @@ function styChange(e){
 };
 
 
-// Counter function
-var add = (function () {
-    var counter = 0;
-    return function () {return counter += 1;}
-})();
-
 
 // Checks if the cards match and changes class names accordingly - with 0,5 sec delay
 function ifMatch(cards, event) {
@@ -143,18 +146,20 @@ document.getElementById('restart').addEventListener('click', initialize);
 
 
 // Winning Message
+
 function winMessage(){
-    window.clearInterval(timer);
-    winMsg.textContent = 'You win in ' + moves.innerHTML + ' moves!';
+    winMsg.textContent = 'You win in ' + moves.innerHTML + ' moves in ' + totalSeconds + ' sec!';
     var currentDiv = document.getElementById("container");
     document.body.insertBefore(winMsg, currentDiv);
-    winMsg.style.cssText = 'display: inherit;position: absolute;z-index: 2;padding-top: 300px;padding-left: 150px;font-size: 3em;text-align: center;padding-right: 150px;padding-bottom: 300px; list-style-type: none; display: flex'  
+    winMsg.style.cssText = 'display: inherit;position: absolute;z-index: 2;padding-top: 300px;padding-left: 150px;font-size: 5em;text-align: center;padding-right: 150px;padding-bottom: 300px; list-style-type: none; display: flex'  
     
-    var starHTML = stars.innerHTML
-    var refreshHTML = '<div class="restartGame" id="restartGame"> <i class="fa fa-repeat"></i> </div>' +  starHTML + totalSeconds;
-    
+    var refreshHTML = '<div class="restartGame" id="restartGame"> <i class="fa fa-repeat"></i> </div>';
     winMsg.insertAdjacentHTML('beforeend', refreshHTML);
     document.getElementById('restartGame').addEventListener('click', initialize);
+
+    
+    var starsHTML = '<li><i class="fa fa-star"></i></li> <li><i class="fa fa-star"></i></li> <li><i class="fa fa-star"></i></li>'
+    winMsg.insertAdjacentHTML('beforeend', starsHTML);
 };
 
 
